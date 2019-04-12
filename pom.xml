@@ -10,7 +10,7 @@
 		<relativePath /> <!-- lookup parent from repository -->
 	</parent>
 	<groupId>com.songdi</groupId>
-	<artifactId>spring-boot-vue</artifactId>
+	<artifactId>paas-lite</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
 	<name>spring-boot-vue</name>
 	<description>Demo project for Spring Boot</description>
