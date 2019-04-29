@@ -20,26 +20,26 @@
 <script>
 // import { HeaderItem, SideBar, AppMain } from "./components";
 
-import { mapGetters } from "vuex";
-import SideBar from "./components/Sidebar/index";
-import AppMain from "./components/AppMain";
-import HeaderItem from "./components/Header/index";
+import { mapGetters } from 'vuex'
+import SideBar from './components/Sidebar/index'
+import AppMain from './components/AppMain'
+import HeaderItem from './components/Header/index'
 export default {
   components: {
-    "header-item": HeaderItem,
-    "side-bar": SideBar,
-    "app-main": AppMain
+    'header-item': HeaderItem,
+    'side-bar': SideBar,
+    'app-main': AppMain
   },
   data() {
-    return {};
+    return {}
   },
   computed: {
-    ...mapGetters(["isCollapse"]),
+    ...mapGetters(['isCollapse']),
     getChange() {
-      return this.isCollapse; //去vuex里取isCollapse状态值
+      return this.isCollapse
     }
   }
-};
+}
 </script>
 
 <style lang="scss" scoped>
@@ -49,32 +49,32 @@ export default {
   transition: margin-left 0.28s;
   margin-left: 230px;
   position: relative;
+  top: 55px;
   background: #f5f7fa;
   padding: 20px;
   text-align: left;
-  margin-top: 80px;
   width: calc(100% - 230px);
-  display: table;
+  //display: table;
 }
 .main-max {
-  width: calc(100% - 70px);
+  width: calc(100% - 60px);
 }
 .side-bar {
   margin-left: 230px;
 }
 .side-bar-min {
-  margin-left: 70px;
+  margin-left: 60px;
 }
 // 为配合实现水平垂直绝对居中
 .container {
   width: 100%;
   height: 100%;
   header {
-    height: 80px;
-    background: #2b3844;
+    width: 100%;
+    height: 55px;
+    background: #252a2f;
     position: fixed;
     top: 0;
-    width: 100%;
     z-index: 1000;
   }
   .main-container {

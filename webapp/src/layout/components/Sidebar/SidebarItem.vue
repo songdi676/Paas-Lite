@@ -15,7 +15,7 @@ export default {
     return {};
   },
   methods: {}
-};
+}
 </script>
 
 <style lang="scss" scoped>

@@ -9,6 +9,7 @@ import 'normalize.css/normalize.css' // a modern alternative to CSS resets
 import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
+import 'font-awesome/css/font-awesome.css'
 
 import '@/styles/index.scss' // global css
 

@@ -20,10 +20,25 @@ export const constantRouterMap = [{
 
 ]
 
-export default new Router({
-    // mode: 'history', //后端支持可开
-    scrollBehavior: () => ({
-        y: 0
-    }),
+const createRouter = () => new Router({
+    // mode: 'history', // require service support
+    scrollBehavior: () => ({ y: 0 }),
     routes: constantRouterMap
 })
+
+const router = createRouter()
+
+export function resetRouter() {
+    const newRouter = createRouter()
+    router.matcher = newRouter.matcher // reset router
+}
+
+export default router
+
+// export default new Router({
+//     // mode: 'history', //后端支持可开
+//     scrollBehavior: () => ({
+//         y: 0
+//     }),
+//     routes: constantRouterMap
+// })
