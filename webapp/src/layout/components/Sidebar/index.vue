@@ -27,8 +27,8 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex"
-import SiderbarItem from "./SidebarItem"
+import { mapGetters } from "vuex";
+import SiderbarItem from "./SidebarItem";
 export default {
   components: {
     "sidebar-item": SiderbarItem
@@ -37,7 +37,11 @@ export default {
     return {};
   },
   computed: {
-    ...mapGetters(["isCollapse"]),
+    ...mapGetters([
+      'permission_routes',
+      'count',
+      'isCollapse'
+      ]),
     getChange: {
       //新增 get和set,解决v-model的双向绑定问题。单独定义getChange方法不能实现双向数据绑定
       get: function() {
@@ -56,9 +60,10 @@ export default {
       console.log(key, keyPath);
     },
     activedMenu() {
+      
       if (this.$route.path.indexOf("/dashboard") == 0) {
         return "1";
-      } else if (this.$route.path.indexOf("/project") == 0) {
+      } else if (this.$route.path.indexOf("/documentation") == 0) {
         return "2";
       } else if (this.$route.path.indexOf("/question") == 0) {
         return "3";
@@ -73,7 +78,7 @@ export default {
       }
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -86,7 +91,7 @@ export default {
   min-height: 400px;
   color: #fff;
 }
-.el-menu--collapse{
+.el-menu--collapse {
   width: 60px;
 }
 

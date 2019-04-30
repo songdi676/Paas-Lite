@@ -4,6 +4,7 @@ import getters from './getters'
 
 //分模块新建每个组件对应的store对象，并引入到此
 import app from './modules/app'
+import permission from './modules/permission'
 
 Vue.use(Vuex)
 
@@ -16,7 +17,8 @@ Vue.use(Vuex)
 
 const store = new Vuex.Store({
     modules: {
-        app
+        app,
+        permission
     },
     getters
 })
