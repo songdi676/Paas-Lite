@@ -6,12 +6,25 @@
         <span slot="title" class="itemText">概览</span>
       </el-menu-item>
     </router-link>
-    <router-link to="/documentation">
-      <el-menu-item index="2">
-        <i class="fa fa-tachometer" aria-hidden="true"></i>
+    <el-submenu index="2">
+      <template slot="title">
+        <i class="fa fa-tachometer"></i>
         <span slot="title" class="itemText">我的资源</span>
-      </el-menu-item>
-    </router-link>
+      </template>
+
+      <router-link to="/resource/dashboard">
+        <el-menu-item index="2-1">
+          <i class="fa fa-area-chart" aria-hidden="true"></i>
+          <span slot="title" class="itemText">概览</span>
+        </el-menu-item>
+      </router-link>
+      <router-link to="/resourcelist">
+        <el-menu-item index="2-2">
+          <i class="fa fa-users" aria-hidden="true"></i>
+          <span slot="title" class="itemText">主机资源管理</span>
+        </el-menu-item>
+      </router-link>
+    </el-submenu>
   </div>
 </template>
 

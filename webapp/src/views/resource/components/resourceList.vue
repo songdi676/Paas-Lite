@@ -1,6 +1,6 @@
 <template>
     <section>
-        document
+        我的资源-主机管理
     </section>
 </template>
 

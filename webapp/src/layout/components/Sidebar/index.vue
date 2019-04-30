@@ -63,18 +63,10 @@ export default {
       
       if (this.$route.path.indexOf("/dashboard") == 0) {
         return "1";
-      } else if (this.$route.path.indexOf("/documentation") == 0) {
-        return "2";
-      } else if (this.$route.path.indexOf("/question") == 0) {
-        return "3";
-      } else if (this.$route.path.indexOf("/monitor/index") == 0) {
-        return "4-1";
-      } else if (this.$route.path.indexOf("/digital") == 0) {
-        return "4-2";
-      } else if (this.$route.path.indexOf("/flow") == 0) {
-        return "4-3";
-      } else if (this.$route.path.indexOf("/about/index") == 0) {
-        return "5";
+      } else if (this.$route.path.indexOf("/resource/dashboard") == 0) {
+        return "2-1";
+      }  else if (this.$route.path.indexOf("/resourcelist") == 0) {
+        return "2-2";
       }
     }
   }

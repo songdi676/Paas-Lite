@@ -24,35 +24,23 @@ export const constantRouterMap = [{
         }]
     },
     {
-        path: '/documentation',
+        path: '/resource',
         component: Layout,
+        name: 'Resource',
         children: [{
-            path: 'index',
+            path: '/resource/dashboard',
             component: () =>
-                import ('@/views/documentation/index'),
-            name: 'Documentation',
-            meta: {
-                title: 'documentation',
-                icon: 'documentation',
-                affix: true,
-            }
+                import ('@/views/resource/components/dashboard'),
+        }, {
+            path: '/resourcelist',
+            component: () =>
+                import ('@/views/resource/components/resourceList'),
         }]
+
     },
 
 ]
-export const asyncRoutes = [{
-    path: '/permission',
-    component: Layout,
-    redirect: '/permission/page',
-    alwaysShow: true, // will always show the root menu
-    name: 'Permission',
-    meta: {
-        title: 'permission',
-        icon: 'lock',
-        roles: ['admin', 'editor'] // you can set roles in root nav
-    },
 
-}]
 const createRouter = () => new Router({
     // mode: 'history', // require service support
     scrollBehavior: () => ({
