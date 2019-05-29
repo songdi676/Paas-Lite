@@ -1,28 +1,25 @@
 <template>
-<div class="navbar">
-    <trans-icon class="icon"></trans-icon>
+  <div class="navbar">
     <bread-crumb></bread-crumb>
-</div>
+  </div>
 </template>
 
 <script>
-import BreadCrumb from '@/components/breadcrumb/index'
-import TransIcon from '@/components/transIcon/index'
+import BreadCrumb from "@/components/Breadcrumb/index";
 export default {
-    components: {
-        'bread-crumb': BreadCrumb,
-        'trans-icon': TransIcon
-    }
-
-}
+  components: {
+    "bread-crumb": BreadCrumb
+  }
+};
 </script>
 
 <style lang="scss" scoped>
 .navbar {
-    display: flex;
-}
-
-.icon {
-    margin-right: 20px;
+  height: 50px;
+  overflow: hidden;
+  position: relative;
+  background: #fff;
+  -webkit-box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
+  box-shadow: 0 1px 4px rgba(0, 21, 41, 0.08);
 }
 </style>

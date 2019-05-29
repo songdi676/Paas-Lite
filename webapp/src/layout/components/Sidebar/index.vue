@@ -21,7 +21,7 @@
           </el-radio-button>
         </el-radio-group>
       </div>
-      <sidebar-item></sidebar-item>
+      <sidebar-item v-for="route in routelist" :key="route.path" :item="route"  :base-path="route.path"></sidebar-item>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -34,7 +34,9 @@ export default {
     "sidebar-item": SiderbarItem
   },
   data() {
-    return {};
+    return {
+      routelist: []
+    };
   },
   computed: {
     ...mapGetters([
@@ -60,14 +62,22 @@ export default {
       console.log(key, keyPath);
     },
     activedMenu() {
-      
-      if (this.$route.path.indexOf("/dashboard") == 0) {
-        return "1";
-      } else if (this.$route.path.indexOf("/resource/dashboard") == 0) {
-        return "2-1";
-      }  else if (this.$route.path.indexOf("/resourcelist") == 0) {
-        return "2-2";
+      const route = this.$route
+      const { meta, path } = route
+      const routers=this.$router.options.routes
+      this.routelist=routers
+      // if set path, the sidebar will highlight the path you set
+      if (meta.activeMenu) {
+        return meta.activeMenu
       }
+      return path
+      // if (this.$route.path.indexOf("/dashboard") == 0) {
+      //   return "1";
+      // } else if (this.$route.path.indexOf("/resource/dashboard") == 0) {
+      //   return "2-1";
+      // }  else if (this.$route.path.indexOf("/resourcelist") == 0) {
+      //   return "2-2";
+      // }
     }
   }
 };

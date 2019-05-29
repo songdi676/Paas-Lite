@@ -1,54 +1,13 @@
 <template>
   <el-row :gutter="20" class="panel-group">
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
+    <el-col :xs="12" :sm="12" :lg="colSpan" class="card-panel-col" v-for="item in data" :key="item">
       <div class="card-panel" @click="handleSetLineChartData('newVisitis')">
-        <div class="card-panel-icon-wrapper icon-people">
-          <i class="fa fa-user card-panel-icon"></i>
+        <div class="card-panel-icon-wrapper" :class="[item.parenticon]">
+          <i class="card-panel-icon" :class="[item.icon]"></i>
         </div>
         <div class="card-panel-description">
-          <div class="card-panel-text">
-            New Visits
-          </div>
-          <count-to :start-val="0" :end-val="102400" :duration="2600" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('messages')">
-        <div class="card-panel-icon-wrapper icon-message">
-         <i class="fa fa-bar-chart card-panel-icon"></i>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Messages
-          </div>
-          <count-to :start-val="0" :end-val="81212" :duration="3000" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('purchases')">
-        <div class="card-panel-icon-wrapper icon-money">
-          <i class="fa fa-area-chart card-panel-icon"></i>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Purchases
-          </div>
-          <count-to :start-val="0" :end-val="9280" :duration="3200" class="card-panel-num" />
-        </div>
-      </div>
-    </el-col>
-    <el-col :xs="12" :sm="12" :lg="6" class="card-panel-col">
-      <div class="card-panel" @click="handleSetLineChartData('shoppings')">
-        <div class="card-panel-icon-wrapper icon-shopping">
-          <i class="fa fa-database card-panel-icon"></i>
-        </div>
-        <div class="card-panel-description">
-          <div class="card-panel-text">
-            Shoppings
-          </div>
-          <count-to :start-val="0" :end-val="13600" :duration="3600" class="card-panel-num" />
+          <div class="card-panel-text">{{item.name}}</div>
+          <count-to :start-val="0" :end-val="item.enddata" :duration="2600" class="card-panel-num"/>
         </div>
       </div>
     </el-col>
@@ -56,24 +15,41 @@
 </template>
 
 <script>
-import CountTo from 'vue-count-to'
+import CountTo from "vue-count-to";
 
 export default {
+  props: {
+    data: {
+      type: Array,
+      default: "",
+      required: true
+    }
+  },
+  computed: {
+    colSpan() {
+      if (this.data.length % 2 == 0) {
+        return 24 / this.data.length;
+      }
+      else{
+        return parseInt(24 / this.data.length)
+      }
+    }
+  },
   components: {
     CountTo
   },
   methods: {
     handleSetLineChartData(type) {
-      this.$emit('handleSetLineChartData', type)
+      this.$emit("handleSetLineChartData", type);
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
 .panel-group {
   margin-top: 18px;
-  .card-panel-col{
+  .card-panel-col {
     margin-bottom: 32px;
   }
   .card-panel {
@@ -84,50 +60,51 @@ export default {
     overflow: hidden;
     color: #666;
     background: #fff;
-    box-shadow: 4px 4px 40px rgba(0, 0, 0, .05);
-    border-color: rgba(0, 0, 0, .05);
+    box-shadow: 4px 4px 40px rgba(0, 0, 0, 0.05);
+    border-color: rgba(0, 0, 0, 0.05);
+    display: flex;
+    justify-content: space-between;
     &:hover {
       .card-panel-icon-wrapper {
         color: #fff;
       }
-      .icon-people {
-         background: #40c9c6;
+      .icon-green {
+        background: #40c9c6;
       }
-      .icon-message {
+      .icon-blue {
         background: #36a3f7;
       }
-      .icon-money {
+      .icon-red {
         background: #f4516c;
       }
-      .icon-shopping {
-        background: #34bfa3
+      .icon-greenky {
+        background: #34bfa3;
       }
     }
-    .icon-people {
+    .icon-green {
       color: #40c9c6;
     }
-    .icon-message {
+    .icon-blue {
       color: #36a3f7;
     }
-    .icon-money {
+    .icon-red {
       color: #f4516c;
     }
-    .icon-shopping {
-      color: #34bfa3
+    .icon-greenky {
+      color: #34bfa3;
     }
     .card-panel-icon-wrapper {
-      float: left;
-      margin: 14px 0 0 14px;
-      padding: 16px;
+      display: flex;
+      align-items: center;
+      margin: 10px;
+      padding: 10px;
       transition: all 0.38s ease-out;
       border-radius: 6px;
     }
     .card-panel-icon {
-      float: left;
       font-size: 48px;
     }
     .card-panel-description {
-      float: right;
       font-weight: bold;
       margin: 26px;
       margin-left: 0px;

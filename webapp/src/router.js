@@ -17,27 +17,45 @@ export const constantRouterMap = [{
             meta: {
                 title: 'dashboard',
                 zh: '概览',
-                icon: 'fa fa-dashboard',
+                icon: 'dashboard',
                 noCache: true,
                 affix: true
             }
         }]
     },
+
     {
         path: '/resource',
         component: Layout,
         name: 'Resource',
+        meta: {
+            title: 'Resource',
+            zh: '我的资源',
+            icon: 'documentation'
+        },
         children: [{
             path: '/resource/dashboard',
             component: () =>
                 import ('@/views/resource/components/dashboard'),
+            meta: {
+                title: 'dashboard',
+                zh: '概览',
+                noCache: true,
+                affix: true
+            }
         }, {
             path: '/resourcelist',
             component: () =>
                 import ('@/views/resource/components/resourceList'),
+            meta: {
+                title: 'dashboard',
+                zh: '主机资源管理',
+                noCache: true,
+                affix: true
+            }
         }]
 
-    },
+    }
 
 ]
 

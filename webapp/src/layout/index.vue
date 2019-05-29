@@ -11,6 +11,7 @@
         class="main-content"
         :class="{ 'side-bar': !getChange, 'side-bar-min': getChange, 'main-max': getChange }"
       >
+        <breadCrumb v-if="!isdashboard"></breadCrumb>
         <app-main></app-main>
       </div>
     </div>
@@ -19,27 +20,31 @@
 
 <script>
 // import { HeaderItem, SideBar, AppMain } from "./components";
-
-import { mapGetters } from 'vuex'
-import SideBar from './components/Sidebar/index'
-import AppMain from './components/AppMain'
-import HeaderItem from './components/Header/index'
+import path from "path";
+import { mapGetters } from "vuex";
+import SideBar from "./components/Sidebar/index";
+import AppMain from "./components/AppMain";
+import HeaderItem from "./components/Header/index";
+import BreadCrumb from "@/components/Breadcrumb/index";
 export default {
   components: {
-    'header-item': HeaderItem,
-    'side-bar': SideBar,
-    'app-main': AppMain
+    "header-item": HeaderItem,
+    "side-bar": SideBar,
+    "app-main": AppMain,
+    breadCrumb: BreadCrumb
   },
   data() {
-    return {}
+    return {
+      isdashboard: true
+    };
   },
   computed: {
-    ...mapGetters(['isCollapse']),
+    ...mapGetters(["isCollapse"]),
     getChange() {
-      return this.isCollapse
+      return this.isCollapse;
     }
   }
-}
+};
 </script>
 
 <style lang="scss" scoped>
@@ -50,8 +55,8 @@ export default {
   margin-left: 230px;
   position: relative;
   top: 55px;
-  background: #f5f7fa;
   padding: 20px;
+  background: #f5f7fa;
   text-align: left;
   width: calc(100% - 230px);
   //display: table;

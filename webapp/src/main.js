@@ -10,6 +10,7 @@ import Element from 'element-ui'
 import 'element-ui/lib/theme-chalk/index.css'
 
 import 'font-awesome/css/font-awesome.css'
+import './icons' // icon
 
 import '@/styles/index.scss' // global css
 
