@@ -1,11 +1,19 @@
 const app = {
     state: {
-        isCollapse: false
+        isCollapse: false,
+        isHomePage: false
     },
     mutations: {
         changeSubMenu(state) {
             state.isCollapse = !state.isCollapse;
             console.log("点击打开，isCollapse是从store仓库里拿到的");
+        },
+        showBreadCrumb(state, path) {
+            if (path !== "/dashboard") {
+                state.isHomePage = true;
+            } else {
+                state.isHomePage = false;
+            }
         }
     }
 };

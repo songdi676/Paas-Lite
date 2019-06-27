@@ -1,14 +1,43 @@
 <template>
   <section>
     <panelGroup :data="data"></panelGroup>
+    <el-row type="flex" :gutter="20" class="rowBox">
+      <el-col span="12">
+        <el-card>
+          <message></message>
+        </el-card>
+      </el-col>
+      <el-col span="12">
+        <el-card>
+          <alarm></alarm>
+        </el-card>
+      </el-col>
+    </el-row>
+    <el-row type="flex" :gutter="20">
+      <el-col span="12">
+        <el-card>
+        </el-card>
+      </el-col>
+      <el-col span="12">
+        <el-card>
+          
+        </el-card>
+      </el-col>
+    </el-row>
   </section>
 </template>
 
 <script>
 import panelGroup from "./components/panelGroup";
+import message from "./components/message";
+import alarm from "./components/alarm";
+import vLine from "./components/line";
 export default {
   components: {
-    panelGroup
+    panelGroup,
+    message,
+    alarm,
+    vLine
   },
   data() {
     return {
@@ -43,5 +72,13 @@ export default {
 };
 </script>
 
-<style>
+<style lang="scss" scoped>
+.rowBox {
+  margin-bottom: 20px;
+  .el-card {
+    height: 400px;
+    overflow: hidden;
+  }
+}
 </style>
+

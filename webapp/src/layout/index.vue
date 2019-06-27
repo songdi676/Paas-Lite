@@ -11,7 +11,7 @@
         class="main-content"
         :class="{ 'side-bar': !getChange, 'side-bar-min': getChange, 'main-max': getChange }"
       >
-        <breadCrumb v-if="!isdashboard"></breadCrumb>
+        <bread-crumb v-if="isHomePage"></bread-crumb>
         <app-main></app-main>
       </div>
     </div>
@@ -31,19 +31,20 @@ export default {
     "header-item": HeaderItem,
     "side-bar": SideBar,
     "app-main": AppMain,
-    breadCrumb: BreadCrumb
+    "bread-crumb": BreadCrumb
   },
   data() {
     return {
-      isdashboard: true
+      isdashboard: false
     };
   },
   computed: {
-    ...mapGetters(["isCollapse"]),
+    ...mapGetters(["isCollapse", "permission_routes", "isHomePage"]),
     getChange() {
       return this.isCollapse;
     }
-  }
+  },
+  methods: {}
 };
 </script>
 
@@ -55,7 +56,6 @@ export default {
   margin-left: 230px;
   position: relative;
   top: 55px;
-  padding: 20px;
   background: #f5f7fa;
   text-align: left;
   width: calc(100% - 230px);
@@ -89,6 +89,7 @@ export default {
   .app-main {
     height: 100%;
     width: 100%;
+    padding: 15px;
     // display: table-cell;
     // vertical-align: middle;
   }

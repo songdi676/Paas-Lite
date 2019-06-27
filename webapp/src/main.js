@@ -15,9 +15,11 @@ import './icons' // icon
 import '@/styles/index.scss' // global css
 
 import store from '@/store/index'
+import echarts from 'echarts'
 
 
 Vue.config.productionTip = false
+Vue.prototype.$echarts = echarts
 
 Vue.use(Element);
 

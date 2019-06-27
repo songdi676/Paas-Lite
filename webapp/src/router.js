@@ -27,6 +27,7 @@ export const constantRouterMap = [{
     {
         path: '/resource',
         component: Layout,
+        redirect: 'noRedirect',
         name: 'Resource',
         meta: {
             title: 'Resource',
@@ -48,7 +49,7 @@ export const constantRouterMap = [{
             component: () =>
                 import ('@/views/resource/components/resourceList'),
             meta: {
-                title: 'dashboard',
+                title: 'resourcelist',
                 zh: '主机资源管理',
                 noCache: true,
                 affix: true

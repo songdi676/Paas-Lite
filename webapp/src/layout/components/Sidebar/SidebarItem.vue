@@ -10,7 +10,6 @@
         </el-menu-item>
       </router-link>
     </template>
-
     <el-submenu v-else :index="resolvePath(item.path)" popper-append-to-body>
       <template slot="title">
         <div v-if="item.meta">
@@ -28,7 +27,6 @@
           </router-link>
         </div>
       </template>
-     
     </el-submenu>
   </div>
 </template>

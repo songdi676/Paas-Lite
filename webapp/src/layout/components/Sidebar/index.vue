@@ -21,7 +21,12 @@
           </el-radio-button>
         </el-radio-group>
       </div>
-      <sidebar-item v-for="route in routelist" :key="route.path" :item="route"  :base-path="route.path"></sidebar-item>
+      <sidebar-item
+        v-for="route in routelist"
+        :key="route.path"
+        :item="route"
+        :base-path="route.path"
+      ></sidebar-item>
     </el-menu>
   </el-scrollbar>
 </template>
@@ -39,11 +44,7 @@ export default {
     };
   },
   computed: {
-    ...mapGetters([
-      'permission_routes',
-      'count',
-      'isCollapse'
-      ]),
+    ...mapGetters(["permission_routes", "count", "isCollapse", "isHomePage"]),
     getChange: {
       //新增 get和set,解决v-model的双向绑定问题。单独定义getChange方法不能实现双向数据绑定
       get: function() {
@@ -62,22 +63,16 @@ export default {
       console.log(key, keyPath);
     },
     activedMenu() {
-      const route = this.$route
-      const { meta, path } = route
-      const routers=this.$router.options.routes
-      this.routelist=routers
+      const route = this.$route;
+      const { meta, path } = route;
+      const routers = this.$router.options.routes;
+      this.routelist = routers;
       // if set path, the sidebar will highlight the path you set
       if (meta.activeMenu) {
-        return meta.activeMenu
+        return meta.activeMenu;
       }
-      return path
-      // if (this.$route.path.indexOf("/dashboard") == 0) {
-      //   return "1";
-      // } else if (this.$route.path.indexOf("/resource/dashboard") == 0) {
-      //   return "2-1";
-      // }  else if (this.$route.path.indexOf("/resourcelist") == 0) {
-      //   return "2-2";
-      // }
+      this.$store.commit("showBreadCrumb",route.path);
+      return path; 
     }
   }
 };
@@ -93,6 +88,7 @@ export default {
   min-height: 400px;
   color: #fff;
 }
+
 .el-menu--collapse {
   width: 60px;
 }
@@ -103,12 +99,15 @@ export default {
   align-content: center;
   border-top: 1px solid hsla(0, 0%, 100%, 0.1);
   border-bottom: 1px solid hsla(0, 0%, 100%, 0.1);
+
   .el-radio-group {
     margin-bottom: 0 !important;
   }
+
   .itemText {
     margin-left: 15px;
   }
+
   .cn {
     font-size: 14px;
   }
