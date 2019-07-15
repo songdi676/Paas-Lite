@@ -1,13 +1,13 @@
 'use strict'
 const path = require('path')
-    // const defaultSettings = require('./src/settings.js')
+const defaultSettings = require('./src/settings.js')
 
 function resolve(dir) {
     return path.join(__dirname, dir)
 }
 //const name = defaultSettings.title || 'vue Element Admin' // page title
 const name = 'PaasLite' // page title
-const port = 8081 // dev port
+const port = process.env.port || process.env.npm_config_port || 8081 // dev port
 
 // All configuration item explanations can be find in https://cli.vuejs.org/config/
 module.exports = {
@@ -42,20 +42,20 @@ module.exports = {
                     ['^' + process.env.VUE_APP_BASE_API]: ''
                 }
             },
-            // 所有/api开始的请求地址，全部转发到target
-            '/api': {
-                target: 'http://127.0.0.1:18081',
-                changeOrigin: true
-            },
-            '/sonar/api/': {
-                target: 'http://10.1.8.33:29000',
-                changeOrigin: true,
-                pathRewrite: {
-                    '^/sonar/api': '/api/'
-                }
-            }
+            // // 所有/api开始的请求地址，全部转发到target
+            // '/api': {
+            //     target: 'http://127.0.0.1:18081',
+            //     changeOrigin: true
+            // },
+            // '/sonar/api/': {
+            //     target: 'http://10.1.8.33:29000',
+            //     changeOrigin: true,
+            //     pathRewrite: {
+            //         '^/sonar/api': '/api/'
+            //     }
+            // }
         },
-        //after: require('./mock/mock-server.js')
+        after: require('./mock/mock-server.js')
     },
     configureWebpack: {
         // provide the app's title in webpack's name field, so that

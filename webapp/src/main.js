@@ -18,6 +18,17 @@ import store from '@/store/index'
 import echarts from 'echarts'
 
 
+import { mockXHR } from '../mock'
+if (process.env.NODE_ENV === 'production') {
+    mockXHR()
+}
+
+Vue.use(Element, {
+    size: Cookies.get('size') || 'medium' // set element-ui default size
+})
+
+
+
 Vue.config.productionTip = false
 Vue.prototype.$echarts = echarts
 

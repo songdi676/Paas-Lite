@@ -1,10 +1,17 @@
-// getters 去vuex里拿出变量，存放在这，需要取用的时候，在对应的页面computed里通过mapGetters拿到变量
-// getters就是vuex的计算属性。
-// 这样就不需要在对应的页面computed里去写一串 “this.$store.state.question.questionName”获取questionName的值
 const getters = {
-    isCollapse: state => state.app.isCollapse, //state.app.isCollapse相当于this.$store.state.app.isCollapse
-    permission_routes: state => state.permission.routes,
-    count: state => state.permission.count,
+    sidebar: state => state.app.sidebar,
+    size: state => state.app.size,
+    device: state => state.app.device,
+    isCollapse: state => state.app.isCollapse,
     isHomePage: state => state.app.isHomePage,
+    visitedViews: state => state.tagsView.visitedViews,
+    cachedViews: state => state.tagsView.cachedViews,
+    token: state => state.user.token,
+    avatar: state => state.user.avatar,
+    name: state => state.user.name,
+    introduction: state => state.user.introduction,
+    roles: state => state.user.roles,
+    permission_routes: state => state.permission.routes,
+    errorLogs: state => state.errorLog.logs
 }
 export default getters

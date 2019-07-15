@@ -8,7 +8,7 @@
 </template>
 
 <script>
-import lineChart from '@/components/charts/lineChart'
+import lineChart from '@/components/Charts/lineChart'
 const lineChartData = {
   orderTotals: {
     expectedData: [211100, 231220, 425161, 321340, 131005, 561600, 331650,425161, 321340, 131005, 561600, 331650],

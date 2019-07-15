@@ -23,20 +23,35 @@
             <el-dropdown-menu slot="dropdown">
               <el-dropdown-item>Dashboard</el-dropdown-item>
               <el-dropdown-item>About Me</el-dropdown-item>
-              <el-dropdown-item>Login Out</el-dropdown-item>
+              <el-dropdown-item >
+                <span style="display:block;" @click="logout">Log Out</span>
+              </el-dropdown-item>
             </el-dropdown-menu>
           </el-dropdown>
         </a>
       </div>
     </div>
-    <div class="subNav">
-        
-    </div>
+    <div class="subNav"></div>
   </section>
 </template>
 
 <script>
-export default {};
+import { mapGetters } from 'vuex'
+export default {
+  computed: {
+    ...mapGetters([
+      'sidebar',
+      'avatar',
+      'device'
+    ])
+  },
+   methods: {
+    async logout() {
+      await this.$store.dispatch('user/logout')
+      this.$router.push(`/login?redirect=${this.$route.fullPath}`)
+    }
+  }
+};
 </script>
 
 <style lang="scss" scoped>
