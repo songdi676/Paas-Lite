@@ -1,9 +1,6 @@
 <template>
   <div :style="{height:height+'px',zIndex:zIndex}">
-    <div
-      :class="className"
-      :style="{top:(isSticky ? stickyTop +'px' : ''),zIndex:zIndex,position:position,width:width,height:height+'px'}"
-    >
+    <div :class="className" :style="{top:stickyTop+'px',zIndex:zIndex,position:position,width:width,height:height+'px'}">
       <slot>
         <div>sticky</div>
       </slot>
@@ -12,80 +9,66 @@
 </template>
 
 <script>
-export default {
-  name: 'Sticky',
-  props: {
-    stickyTop: {
-      type: Number,
-      default: 0
+  export default {
+    name: 'Sticky',
+    props: {
+      stickyTop: {
+        type: Number,
+        default: 0
+      },
+      zIndex: {
+        type: Number,
+        default: 1
+      },
+      className: {
+        type: String
+      }
     },
-    zIndex: {
-      type: Number,
-      default: 1
+    data() {
+      return {
+        active: false,
+        position: '',
+        currentTop: '',
+        width: undefined,
+        height: undefined,
+        child: null,
+        stickyHeight: 0
+
+      };
     },
-    className: {
-      type: String,
-      default: ''
+    methods: {
+      sticky() {
+        if (this.active) {
+          return
+        }
+        this.position = 'fixed';
+        this.active = true;
+        this.width = this.width + 'px';
+      },
+      reset() {
+        if (!this.active) {
+          return
+        }
+        this.position = '';
+        this.width = 'auto'
+        this.active = false
+      },
+      handleScroll() {
+        this.width = this.$el.getBoundingClientRect().width;
+        const offsetTop = this.$el.getBoundingClientRect().top;
+        if (offsetTop <= this.stickyTop) {
+          this.sticky();
+          return
+        }
+        this.reset()
+      }
+    },
+    mounted() {
+      this.height = this.$el.getBoundingClientRect().height;
+      window.addEventListener('scroll', this.handleScroll);
+    },
+    destroyed() {
+      window.removeEventListener('scroll', this.handleScroll);
     }
-  },
-  data() {
-    return {
-      active: false,
-      position: '',
-      width: undefined,
-      height: undefined,
-      isSticky: false
-    }
-  },
-  mounted() {
-    this.height = this.$el.getBoundingClientRect().height
-    window.addEventListener('scroll', this.handleScroll)
-    window.addEventListener('resize', this.handleResize)
-  },
-  activated() {
-    this.handleScroll()
-  },
-  destroyed() {
-    window.removeEventListener('scroll', this.handleScroll)
-    window.removeEventListener('resize', this.handleResize)
-  },
-  methods: {
-    sticky() {
-      if (this.active) {
-        return
-      }
-      this.position = 'fixed'
-      this.active = true
-      this.width = this.width + 'px'
-      this.isSticky = true
-    },
-    handleReset() {
-      if (!this.active) {
-        return
-      }
-      this.reset()
-    },
-    reset() {
-      this.position = ''
-      this.width = 'auto'
-      this.active = false
-      this.isSticky = false
-    },
-    handleScroll() {
-      const width = this.$el.getBoundingClientRect().width
-      this.width = width || 'auto'
-      const offsetTop = this.$el.getBoundingClientRect().top
-      if (offsetTop < this.stickyTop) {
-        this.sticky()
-        return
-      }
-      this.handleReset()
-    },
-    handleResize() {
-      if (this.isSticky) {
-        this.width = this.$el.getBoundingClientRect().width + 'px'
-      }
-    }
-  }
-}
+  };
 </script>
