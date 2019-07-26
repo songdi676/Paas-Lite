@@ -144,7 +144,7 @@
 							<executable>${cnpm}</executable>
 							<arguments>
 								<argument>run</argument>
-								<argument>build</argument>
+								<argument>build:prod</argument>
 							</arguments>
 							<workingDirectory>${basedir}/webapp</workingDirectory>
 						</configuration>
