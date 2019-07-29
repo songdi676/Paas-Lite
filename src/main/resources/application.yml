@@ -33,7 +33,7 @@ spring:
 
     
 server:
-    port: 8762
+    port: 9777
     
 jwt:
   token-header: Authorization
