@@ -14,7 +14,7 @@ import com.songdi.paas.common.rest.BaseController;
  * @create 2017-06-08 11:51
  */
 @Controller
-@RequestMapping("groupType")
+@RequestMapping("/api/admin/groupType")
 public class GroupTypeController extends BaseController<GroupTypeBiz, GroupType> {
     //
     // @RequestMapping(value = "/page",method = RequestMethod.GET)

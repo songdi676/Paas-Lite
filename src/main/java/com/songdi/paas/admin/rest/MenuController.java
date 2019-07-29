@@ -29,7 +29,7 @@ import tk.mybatis.mapper.entity.Example;
  * @create 2017-06-12 8:49
  */
 @Controller
-@RequestMapping("menu")
+@RequestMapping("/api/admin/menu")
 public class MenuController extends BaseController<MenuBiz, Menu> {
     @Autowired
     private UserBiz userBiz;

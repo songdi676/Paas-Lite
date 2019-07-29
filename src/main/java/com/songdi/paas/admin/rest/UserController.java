@@ -26,7 +26,7 @@ import com.songdi.paas.common.rest.BaseController;
  * @create 2017-06-08 11:51
  */
 @RestController
-@RequestMapping("user")
+@RequestMapping("/api/admin/user")
 public class UserController extends BaseController<UserBiz, User> {
     @Autowired
     private PermissionService permissionService;

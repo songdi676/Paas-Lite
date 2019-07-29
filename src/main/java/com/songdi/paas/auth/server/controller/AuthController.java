@@ -14,7 +14,7 @@ import com.songdi.paas.auth.server.util.user.JwtAuthenticationRequest;
 import com.songdi.paas.common.msg.ObjectRestResponse;
 
 @RestController
-@RequestMapping("jwt")
+@RequestMapping("/api/auth/jwt")
 public class AuthController {
     @Value("${jwt.token-header}")
     private String tokenHeader;

@@ -33,7 +33,7 @@ import tk.mybatis.mapper.entity.Example;
  * @create 2017-06-12 8:49
  */
 @Controller
-@RequestMapping("group")
+@RequestMapping("/api/admin/group")
 @Api("群组模块")
 public class GroupController extends BaseController<GroupBiz, Group> {
     @Autowired

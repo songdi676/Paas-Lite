@@ -14,7 +14,7 @@ import com.songdi.paas.common.rest.BaseController;
  * @create 2017-07-01 20:32
  */
 @Controller
-@RequestMapping("gateLog")
+@RequestMapping("/api/admin/gateLog")
 public class GateLogController extends BaseController<GateLogBiz, GateLog> {
     // @RequestMapping(value = "/page",method = RequestMethod.GET)
     // @ResponseBody

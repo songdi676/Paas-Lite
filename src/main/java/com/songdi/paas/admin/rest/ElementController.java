@@ -26,7 +26,7 @@ import tk.mybatis.mapper.entity.Example;
  * @create 2017-06-23 20:30
  */
 @Controller
-@RequestMapping("element")
+@RequestMapping("/api/admin/element")
 public class ElementController extends BaseController<ElementBiz, Element> {
     @Autowired
     private UserBiz userBiz;
