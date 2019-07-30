@@ -31,13 +31,13 @@ module.exports = {
         assetsPublicPath: '/',
         proxyTable: {
           '/jwt': {
-            target: 'http://localhost:8765',
+            target: 'http://localhost:9777',
             pathRewrite: {
               '^/jwt': '/jwt'
             },
           },
           '/api':{
-            target: 'http://localhost:8765',
+            target: 'http://localhost:9777',
             pathRewrite: {
               '^/api': '/api'
             },
