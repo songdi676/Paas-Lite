@@ -6,7 +6,7 @@
       <router-link :to="resolvePath(onlyOneChild.path)">
         <el-menu-item :index="resolvePath(onlyOneChild.path)">
            <svg-icon :icon-class="onlyOneChild.meta.icon||(item.meta&&item.meta.icon)"/>
-           <span slot='title' class='itemText'>{{onlyOneChild.meta.zh}}</span>
+           <span slot='title' class='itemText'>{{onlyOneChild.meta.title}}</span>
         </el-menu-item>
       </router-link>
     </template>
@@ -14,7 +14,7 @@
       <template slot="title">
         <div v-if="item.meta">
           <svg-icon :icon-class="item.meta && item.meta.icon"/>
-          <span slot="title" class="itemText">{{item.meta.zh}}</span>
+          <span slot="title" class="itemText">{{item.meta.title}}</span>
         </div>
       </template>
       <template>
@@ -32,8 +32,12 @@
 </template>
 
 <script>
-import path from "path";
+import path from "path"
+import Item from './Item'
 export default {
+  components:{
+    Item
+  },
   name: "SidebarItem",
   props: {
     // route object
