@@ -1,69 +1,74 @@
-import { asyncRoutes, constantRoutes } from '@/router'
-
+import {
+  asyncRouterMap,
+  constantRouterMap
+} from 'src/router'
+import { getAllMenus } from 'api/login';
 /**
- * Use meta.role to determine if the current user has permission
- * @param roles
+ * 通过authority判断是否与当前用户权限匹配
+ * @param menus
  * @param route
  */
-function hasPermission(roles, route) {
-  if (route.meta && route.meta.roles) {
-    return roles.some(role => route.meta.roles.includes(role))
+function hasPermission(menus, route) {
+  if (route.authority) {
+    if (menus[route.authority] !== undefined) {
+      return menus[route.authority];
+    } else {
+      return false;
+    }
   } else {
     return true
   }
 }
 
 /**
- * Filter asynchronous routing tables by recursion
- * @param routes asyncRoutes
+ * 递归过滤异步路由表，返回符合用户角色权限的路由表
+ * @param asyncRouterMap
  * @param roles
  */
-export function filterAsyncRoutes(routes, roles) {
-  const res = []
-
-  routes.forEach(route => {
-    const tmp = { ...route }
-    if (hasPermission(roles, tmp)) {
-      if (tmp.children) {
-        tmp.children = filterAsyncRoutes(tmp.children, roles)
+function filterAsyncRouter(asyncRouterMap, menus, menuDatas) {
+  const accessedRouters = asyncRouterMap.filter(route => {
+    if (hasPermission(menus, route)) {
+      route.name = menuDatas[route.authority].title;
+      route.icon = menuDatas[route.authority].icon;
+      if (route.children && route.children.length) {
+        route.children = filterAsyncRouter(route.children, menus, menuDatas);
       }
-      res.push(tmp)
+      return true
     }
+    return false
   })
-
-  return res
+  return accessedRouters
 }
 
-const state = {
-  routes: [],
-  addRoutes: []
-}
-
-const mutations = {
-  SET_ROUTES: (state, routes) => {
-    state.addRoutes = routes
-    state.routes = constantRoutes.concat(routes)
+const permission = {
+  state: {
+    routers: constantRouterMap,
+    addRouters: []
+  },
+  mutations: {
+    SET_ROUTERS: (state, routers) => {
+      state.addRouters = routers
+      state.routers = constantRouterMap.concat(routers)
+    }
+  },
+  actions: {
+    GenerateRoutes({
+      commit
+    }, menus) {
+      return new Promise(resolve => {
+        getAllMenus().then(data => {
+          const menuDatas = {};
+          for (let i = 0; i < data.length; i++) {
+            menuDatas[data[i].code] = data[i];
+          }
+          const accessedRouters = filterAsyncRouter(asyncRouterMap, menus, menuDatas);
+          console.log(accessedRouters);
+          commit('SET_ROUTERS', accessedRouters);
+          resolve();
+        });
+      })
+    }
   }
-}
+};
 
-const actions = {
-  generateRoutes({ commit }, roles) {
-    return new Promise(resolve => {
-      let accessedRoutes
-      if (roles.includes('admin')) {
-        accessedRoutes = asyncRoutes || []
-      } else {
-        accessedRoutes = filterAsyncRoutes(asyncRoutes, roles)
-      }
-      commit('SET_ROUTES', accessedRoutes)
-      resolve(accessedRoutes)
-    })
-  }
-}
-
-export default {
-  namespaced: true,
-  state,
-  mutations,
-  actions
-}
+export default permission;

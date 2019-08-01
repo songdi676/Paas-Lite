@@ -1,8 +1,8 @@
-import request from '@/utils/request'
+import fetch from 'utils/fetch';
 
 export function getToken() {
-  return request({
+  return fetch({
     url: '/qiniu/upload/token', // 假地址 自行替换
     method: 'get'
-  })
+  });
 }
