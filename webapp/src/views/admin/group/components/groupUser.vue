@@ -1,59 +1,130 @@
 <template>
-<el-form label-width="80px">
-  <el-form-item label="群主|领导">
-    <el-select v-model="leaders" multiple filterable remote placeholder="请输入关键词" :remote-method="remoteLeaderMethod" :loading="loading">
-      <el-option v-for="item in lItems" :key="item.id" :label="item.name" :value="item.id"> </el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item label="组员|下属">
-    <el-select v-model="members" multiple filterable remote placeholder="请输入关键词" :remote-method="remoteMemberMethod" :loading="loading">
-      <el-option v-for="item in mItems" :key="item.id" :label="item.name" :value="item.id"> </el-option>
-    </el-select>
-  </el-form-item>
-  <el-form-item>
-    <el-button type="primary" v-if="groupManager_btn_userManager" @click="onSubmit">保存</el-button>
-  </el-form-item>
-</el-form>
+  <div>
+    <el-form label-width="80px">
+      <el-tabs v-model="activeName" @tab-click="handleClick">
+        <el-tab-pane label="群主分配" name="first">
+          <el-transfer v-model="value" :data="data" :titles="['未分配', '权限角色']"></el-transfer>
+        </el-tab-pane>
+        <el-tab-pane label="组员分配" name="second">
+          <el-transfer v-model="value" :data="data" :titles="['未分配', '权限角色']"></el-transfer>
+        </el-tab-pane>
+      </el-tabs>
+      <el-form-item label="群主|领导">
+        <el-select
+          v-model="leaders"
+          multiple
+          filterable
+          remote
+          placeholder="请输入关键词"
+          :remote-method="remoteLeaderMethod"
+          :loading="loading"
+        >
+          <el-option v-for="item in lItems" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item label="组员|下属">
+        <el-select
+          v-model="members"
+          multiple
+          filterable
+          remote
+          placeholder="请输入关键词"
+          :remote-method="remoteMemberMethod"
+          :loading="loading"
+        >
+          <el-option v-for="item in mItems" :key="item.id" :label="item.name" :value="item.id"></el-option>
+        </el-select>
+      </el-form-item>
+      <el-form-item>
+        <el-button type="primary" v-if="groupManager_btn_userManager" @click="onSubmit">保存</el-button>
+      </el-form-item>
+    </el-form>
+  </div>
 </template>
 
 <script>
-import {
-  page
-} from 'api/admin/user/index';
-import {
-  getUsers,
-  modifyUsers
-} from 'api/admin/group/index';
-import { mapGetters } from 'vuex';
+import { page, all } from "api/admin/user/index";
+import { getUsers, modifyUsers } from "api/admin/group/index";
+import { mapGetters } from "vuex";
 export default {
   props: {
     groupId: {
-      default: '1'
+      default: "1"
     }
   },
+
   data() {
+    /**这是一个函数，不要放在data（）
+     * 块里面
+     */
+    // const generateData = _ => {
+    //     const data = [];
+    //     console.log(this.list);
+    //     for (let i = 0; i <= this.list.length; i++) {
+    //       data.push({
+    //         key: i,
+    //         label: `备选项 ${ i }`,
+    //         disabled: i % 4===0
+    //       });
+    //     }
+    //     return data;
+    // };
     return {
-      lItems: [],
-      mItems: [],
+      lItems: [], //领导
+      mItems: [], //成员
       leaders: [],
       members: [],
-      list: [],
+      list: [], //变量也要有意义，谁知道这是什么列表
       loading: false,
-      groupManager_btn_userManager: false
-    }
+      groupManager_btn_userManager: false,
+      data: [], //一样，不知道是什么数据
+      value: this.members,
+      listLoading: true,
+      listQuery: {
+        page: 1,
+        limit: 20,
+        name: undefined
+      },
+      activeName: "second"
+    };
   },
   created() {
     this.initUsers();
-    this.groupManager_btn_userManager = this.elements['groupManager:btn_userManager'];
+    this.getAllUserList();
+    this.groupManager_btn_userManager = this.elements[
+      "groupManager:btn_userManager"
+    ];
   },
   computed: {
-    ...mapGetters([
-      'elements'
-    ])
+    ...mapGetters(["elements"])
   },
   methods: {
+    handleClick(tab, event) {
+      console.log(tab, event);
+    },
+    generateData() {
+      debugger;
+      console.log(this.list);
+      for (let i = 0; i <= this.list.length; i++) {
+        this.data.push({
+          key: i,
+          label: this.list[i].name,
+          disabled: null
+        });
+      }
+      this.value = this.mItems;
+      return data;
+    },
+    /**方法名要有意义，改为getAllUserList */
+    getAllUserList() {
+      all().then(response => {
+        this.list = response;
+        this.data = this.generateData();
+        console.log(this.data);
+      });
+    },
     remoteMemberMethod(query) {
-      if (query !== '') {
+      if (query !== "") {
         this.loading = true;
         this.loading = false;
         page({
@@ -68,7 +139,7 @@ export default {
       }
     },
     remoteLeaderMethod(query) {
-      if (query !== '') {
+      if (query !== "") {
         this.loading = true;
         this.loading = false;
         page({
@@ -87,11 +158,11 @@ export default {
       if (this.members.length > 0) vals.members = this.members.join();
       if (this.leaders.length > 0) vals.leaders = this.leaders.join();
       modifyUsers(this.groupId, vals).then(() => {
-        this.$emit('closeUserDialog');
+        this.$emit("closeUserDialog");
         this.$notify({
-          title: '成功',
-          message: '保存成功',
-          type: 'success',
+          title: "成功",
+          message: "保存成功",
+          type: "success",
           duration: 2000
         });
       });
@@ -100,7 +171,8 @@ export default {
       getUsers(this.groupId).then(response => {
         this.lItems = response.data.leaders;
         this.mItems = response.data.members;
-        const mems = [], leas = [];
+        const mems = [],
+          leas = [];
         for (let i = 0; i < response.data.members.length; i++) {
           mems.push(response.data.members[i].id);
         }
@@ -112,5 +184,5 @@ export default {
       });
     }
   }
-}
+};
 </script>

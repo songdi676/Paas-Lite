@@ -9,7 +9,7 @@
     </div>
 
     <el-row :gutter="20">
-      <el-col :span="6" style="margin-top:15px;">
+      <el-col :span="6" style="margin-top:15px;" class="treeBox">
         <el-input placeholder="输入关键字进行过滤" v-model="filterText"></el-input>
         <el-tree
           class="filter-tree"
@@ -241,12 +241,14 @@ export default {
 </script>
 <style lang="scss" scoped>
 .app-container {
-  .el-input {
-    
-    input.el-input__inner {
-      background: #e7e7e7 !important;
-      border: none !important;
-      border-radius: inherit !important;
+  .treeBox {
+    .el-input {
+      margin-bottom: 10px;
+      input.el-input__inner {
+        background: #e7e7e7 !important;
+        border: none !important;
+        border-radius: inherit !important;
+      }
     }
   }
 

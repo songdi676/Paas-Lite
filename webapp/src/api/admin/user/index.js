@@ -7,6 +7,12 @@ export function page(query) {
     params: query
   });
 }
+export function all() {
+  return fetch({
+    url: '/api/admin/user/all',
+    method: 'get'
+  });
+}
 
 export function addObj(obj) {
   return fetch({

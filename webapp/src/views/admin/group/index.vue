@@ -34,6 +34,7 @@ export default {
     fetchData() {
       getAllGroupTypes().then(data => {
         this.tabMapOptions = data;
+        console.log(this.tabMapOptions);
       });
     }
   }
