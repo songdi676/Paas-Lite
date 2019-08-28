@@ -1,45 +1,19 @@
 <template>
-  <div>
+  <el-form>
     <el-form label-width="80px">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="群主分配" name="first">
-          <el-transfer v-model="leaders" :data="data" :titles="['未选用户', '已选群主']"></el-transfer>
+          <el-transfer v-model="leaders" :data="allUserData" :titles="['未选用户', '已选群主']"></el-transfer>
         </el-tab-pane>
         <el-tab-pane label="组员分配" name="second">
-          <el-transfer v-model="members" :data="data" :titles="['未选用户', '已选组员']"></el-transfer>
+          <el-transfer v-model="members" :data="allUserData" :titles="['未选用户', '已选组员']"></el-transfer>
         </el-tab-pane>
       </el-tabs>
-      <el-form-item label="群主|领导">
-        <el-select
-          v-model="leaders"
-          multiple
-          filterable
-          remote
-          placeholder="请输入关键词"
-          :remote-method="remoteLeaderMethod"
-          :loading="loading"
-        >
-          <el-option v-for="item in lItems" :key="item.id" :label="item.name" :value="item.id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item label="组员|下属">
-        <el-select
-          v-model="members"
-          multiple
-          filterable
-          remote
-          placeholder="请输入关键词"
-          :remote-method="remoteMemberMethod"
-          :loading="loading"
-        >
-          <el-option v-for="item in mItems" :key="item.id" :label="item.name" :value="item.id"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
+      <div style="margin-top:20px;">
         <el-button type="primary" v-if="groupManager_btn_userManager" @click="onSubmit">保存</el-button>
-      </el-form-item>
+      </div>
     </el-form>
-  </div>
+  </el-form>
 </template>
 
 <script>
@@ -52,39 +26,17 @@ export default {
       default: "1"
     }
   },
-
   data() {
-    /**这是一个函数，不要放在data（）
-     * 块里面
-     */
-    // const generateData = _ => {
-    //     const data = [];
-    //     console.log(this.list);
-    //     for (let i = 0; i <= this.list.length; i++) {
-    //       data.push({
-    //         key: i,
-    //         label: `备选项 ${ i }`,
-    //         disabled: i % 4===0
-    //       });
-    //     }
-    //     return data;
-    // };
     return {
       lItems: [], //领导
       mItems: [], //成员
-      leaders: [],//领导用户id
-      members: [],//成员用户id
-      list: [], //变量也要有意义，谁知道这是什么列表
+      leaders: [], //领导用户id
+      members: [], //成员用户id
+      allUserList: [],
       loading: false,
       groupManager_btn_userManager: false,
-      data: [], //一样，不知道是什么数据
-      value: this.members,
-      listLoading: true,
-      listQuery: {
-        page: 1,
-        limit: 20,
-        name: undefined
-      },
+      allUserData: [],
+      value: [],
       activeName: "first"
     };
   },
@@ -103,24 +55,19 @@ export default {
       console.log(tab, event);
     },
     generateData() {
-      
-      console.log(this.list);
-      for (let i = 0; i < this.list.length; i++) {
-        this.data.push({
-          key: this.list[i].id,
-          label: this.list[i].name,
+      for (let i = 0; i < this.allUserList.length; i++) {
+        this.allUserData.push({
+          key: this.allUserList[i].id,
+          label: this.allUserList[i].name,
           disabled: null
         });
       }
       this.value = this.mItems;
-      debugger;
     },
-    /**方法名要有意义，改为getAllUserList */
     getAllUserList() {
       all().then(response => {
-        this.list = response;
+        this.allUserList = response;
         this.generateData();
-        console.log(this.data);
       });
     },
     remoteMemberMethod(query) {
@@ -186,3 +133,8 @@ export default {
   }
 };
 </script>
+<style lang="scss" scope>
+.el-form-item__content {
+  margin-left: 0px !important;
+}
+</style>
