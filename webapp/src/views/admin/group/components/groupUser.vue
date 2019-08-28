@@ -3,10 +3,10 @@
     <el-form label-width="80px">
       <el-tabs v-model="activeName" @tab-click="handleClick">
         <el-tab-pane label="群主分配" name="first">
-          <el-transfer v-model="value" :data="data" :titles="['未分配', '权限角色']"></el-transfer>
+          <el-transfer v-model="leaders" :data="data" :titles="['未选用户', '已选群主']"></el-transfer>
         </el-tab-pane>
         <el-tab-pane label="组员分配" name="second">
-          <el-transfer v-model="value" :data="data" :titles="['未分配', '权限角色']"></el-transfer>
+          <el-transfer v-model="members" :data="data" :titles="['未选用户', '已选组员']"></el-transfer>
         </el-tab-pane>
       </el-tabs>
       <el-form-item label="群主|领导">
@@ -72,8 +72,8 @@ export default {
     return {
       lItems: [], //领导
       mItems: [], //成员
-      leaders: [],
-      members: [],
+      leaders: [],//领导用户id
+      members: [],//成员用户id
       list: [], //变量也要有意义，谁知道这是什么列表
       loading: false,
       groupManager_btn_userManager: false,
@@ -85,7 +85,7 @@ export default {
         limit: 20,
         name: undefined
       },
-      activeName: "second"
+      activeName: "first"
     };
   },
   created() {
@@ -103,23 +103,23 @@ export default {
       console.log(tab, event);
     },
     generateData() {
-      debugger;
+      
       console.log(this.list);
-      for (let i = 0; i <= this.list.length; i++) {
+      for (let i = 0; i < this.list.length; i++) {
         this.data.push({
-          key: i,
+          key: this.list[i].id,
           label: this.list[i].name,
           disabled: null
         });
       }
       this.value = this.mItems;
-      return data;
+      debugger;
     },
     /**方法名要有意义，改为getAllUserList */
     getAllUserList() {
       all().then(response => {
         this.list = response;
-        this.data = this.generateData();
+        this.generateData();
         console.log(this.data);
       });
     },
