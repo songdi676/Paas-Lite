@@ -9,7 +9,7 @@ stages:
   - publishImageConfig:
       dockerfilePath: ./Dockerfile
       buildContext: .
-      tag: 10.1.8.15:5000/newlandtest/pms:1.0
+      tag: newlandtest/pms:1.0
       pushRemote: true
       registry: 10.1.8.15:5000
 - name: 部署
